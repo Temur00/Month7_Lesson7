@@ -38,13 +38,3 @@ function renderTodos(todos) {
     todoList.appendChild(span);
   });
 }
-
-// Add todo function
-function addTodo() {
-  const input = document.getElementById("todoInput");
-  const todoText = input.value.trim();
-  if (todoText !== "") {
-    store.dispatch(addTodoAction(todoText));
-    input.value = "";
-  }
-}

@@ -10,26 +10,25 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./main.scss" />
+
+    <link rel="stylesheet" href="./main.css" />
     <link rel="stylesheet" href="./dist/styles.css" />
   </head>
   <body class="container">
     <!-- MODAL -->
     <div
       class="modal fade"
-      id="staticBackdrop"
+      id="editTodoModal"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
+      aria-labelledby="editTodoModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              Modal title
-            </h1>
+            <h1 class="modal-title fs-5" id="editTodoModalLabel">Edit Todo</h1>
             <button
               type="button"
               class="btn-close"
@@ -37,16 +36,24 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">...</div>
+          <div class="modal-body">
+            <input type="text" id="editTodoInput" class="form-control" />
+          </div>
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
             >
-              Close
+              Cancel
             </button>
-            <button type="button" class="btn btn-primary">Understood</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="saveEditedTodo()"
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>
@@ -64,7 +71,7 @@
         id="searchInput"
         placeholder="Search..."
       />
-      <button class="btn btn-success" onclick="openModal()">Add</button>
+      <button class="btn btn-success" onclick="openAddModal()">Add</button>
     </div>
 
     <table class="table table-striped mt-4">
@@ -80,9 +87,11 @@
           <td>
             <input style="width: 30px; height: 30px" type="checkbox" />
           </td>
-          <td>Do something</td>
+          <td class="task">Do something</td>
           <td>
-            <button class="btn btn-warning" onclick="editTodo()">Edit</button>
+            <button class="btn btn-warning" onclick="openEditModal(this)">
+              Edit
+            </button>
             <button class="btn btn-danger" onclick="deleteTodo(this)">
               Delete
             </button>
@@ -92,9 +101,11 @@
           <td>
             <input style="width: 30px; height: 30px" type="checkbox" />
           </td>
-          <td>Do nothing</td>
+          <td class="task">Do something</td>
           <td>
-            <button class="btn btn-warning" onclick="editTodo()">Edit</button>
+            <button class="btn btn-warning" onclick="openEditModal(this)">
+              Edit
+            </button>
             <button class="btn btn-danger" onclick="deleteTodo(this)">
               Delete
             </button>
@@ -104,33 +115,11 @@
           <td>
             <input style="width: 30px; height: 30px" type="checkbox" />
           </td>
-          <td>Do anything</td>
+          <td class="task">Do something</td>
           <td>
-            <button class="btn btn-warning" onclick="editTodo()">Edit</button>
-            <button class="btn btn-danger" onclick="deleteTodo(this)">
-              Delete
+            <button class="btn btn-warning" onclick="openEditModal(this)">
+              Edit
             </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 30px; height: 30px" type="checkbox" />
-          </td>
-          <td>Do hometask</td>
-          <td>
-            <button class="btn btn-warning" onclick="editTodo()">Edit</button>
-            <button class="btn btn-danger" onclick="deleteTodo(this)">
-              Delete
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input style="width: 30px; height: 30px" type="checkbox" />
-          </td>
-          <td>Do homework</td>
-          <td>
-            <button class="btn btn-warning" onclick="editTodo()">Edit</button>
             <button class="btn btn-danger" onclick="deleteTodo(this)">
               Delete
             </button>
@@ -142,13 +131,14 @@
           </td>
           <td>Do something</td>
           <td>
-            <button class="btn btn-warning" onclick="editTodo()">Edit</button>
+            <button class="btn btn-warning" onclick="openEditModal(this)">
+              Edit
+            </button>
             <button class="btn btn-danger" onclick="deleteTodo(this)">
               Delete
             </button>
           </td>
         </tr>
-        <!-- Add more todo items here -->
       </tbody>
     </table>
 
@@ -159,41 +149,5 @@
       integrity="sha384-MVEwc+2DpYwb0C/YdMV+LMn7hPDrXL7LgYYcmKTzct+3odvJYZ2s38a6SiHwUyYi"
       crossorigin="anonymous"
     ></script>
-    <script>
-      function openModal() {
-        var myModal = new bootstrap.Modal(
-          document.getElementById("staticBackdrop")
-        );
-        myModal.show();
-      }
-
-      function searchTodos() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("todoList");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[1];
-          if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
-          }
-        }
-      }
-      function deleteTodo(button) {
-        var confirmation = confirm(
-          "Are you sure you want to delete this task?"
-        );
-        if (confirmation) {
-          var row = button.closest("tr");
-          row.remove();
-        }
-      }
-    </script>
   </body>
 </html>
